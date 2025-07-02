@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🛰️ NeuroX Sci-Fi Chat</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(135deg, #000000, #0d0d0d);
+      color: #00ffe7;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      font-size: 28px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 8px #00ffe7;
+    }
+
+    #chat-box {
+      width: 80%;
+      max-width: 600px;
+      height: 350px;
+      background: rgba(0, 255, 231, 0.1);
+      border: 2px solid #00ffe7;
+      border-radius: 12px;
+      overflow-y: auto;
+      padding: 15px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 15px #00ffe7;
+    }
+
+    #chat-box p {
+      margin-bottom: 10px;
+    }
+
+    form {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #001010;
+      color: #00ffe7;
+      outline: none;
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      background: #00ffe7;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #00bfbf;
+    }
+
+    .logout-form {
+      margin-top: 15px;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h2>👽 Welcome, {{ user }} to NeuroX Chat</h2>
+
+  <div id="chat-box"></div>
+
+  <form id="chat-form">
+    <input type="text" id="message" placeholder="Enter message..." autocomplete="off" required>
+    <button type="submit">Send</button>
+  </form>
+
+  <form class="logout-form" action="/logout" method="POST">
+    <button>Logout</button>
+  </form>
+
+  <script>
+    async function loadMessages() {
+      const res = await fetch('/messages');
+      const data = await res.json();
+      const box = document.getElementById('chat-box');
+      box.innerHTML = data.map(m => `<p><b>${m.user}:</b> ${m.msg}</p>`).join('');
+      box.scrollTop = box.scrollHeight;
+    }
+
+    document.getElementById('chat-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('message').value;
+      await fetch('/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'message=' + encodeURIComponent(msg)
+      });
+      document.getElementById('message').value = '';
+      loadMessages();
+    });
+
+    setInterval(loadMessages, 2000);
+    loadMessages();
+  </script>
+</body>
+</html>

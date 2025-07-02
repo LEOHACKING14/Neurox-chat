@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NeuroX Login</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at center, #000 30%, #111 100%);
+      color: #00ffea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .login-container {
+      background-color: rgba(0, 255, 255, 0.1);
+      border: 2px solid #00f0ff;
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 0 20px #00f0ff;
+      width: 350px;
+      backdrop-filter: blur(10px);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #00f0ff;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background: #000;
+      border: 1px solid #00f0ff;
+      color: #00f0ff;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #00bfff;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #00f0ff;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #00bfff;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .link a {
+      color: #00ffea;
+      text-decoration: none;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>🔐 Login to NeuroX</h2>
+    <form method="POST" action="/login">
+      <input type="text" name="username" placeholder="Enter your username" required />
+      <input type="password" name="password" placeholder="Enter your password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div class="link">
+      Don't have an account? <a href="/signup">Sign up</a>
+    </div>
+  </div>
+</body>
+</html>
